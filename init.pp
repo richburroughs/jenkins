@@ -1,35 +1,30 @@
-class jenkins {
+file { '/etc/apt/keyrings/jenkins-keyring.asc':
+    ensure => file,
+    source => '/vagrant/files/jenkins-keyring.asc',
+}
 
-    file { '/etc/apt/keyrings/jenkins-keyring.asc':
-        ensure => file,
-        source => '/vagrant/files/jenkins-keyring.asc',
-    }
+file { '/etc/apt/sources.list.d/jenkins.list':
+    ensure  => file,
+    source  => '/vagrant/files/jenkins_apt_sources',
+    require => File['/etc/apt/keyrings/jenkins-keyring.asc']
+}
 
-    file { '/etc/apt/sources.list.d/jenkins.list':
-        ensure  => file,
-        source  => '/vagrant/files/jenkins_apt_sources',
-        require => File['/etc/apt/keyrings/jenkins-keyring.asc']
-    }
+package { 'jenkins':
+    ensure  => present,
+    name    => 'jenkins',
+    require => File['/etc/apt/sources.list.d/jenkins.list']
+}
 
-    package { 'jenkins':
-        ensure  => present,
-        name    => 'jenkins',
-        require => File['/etc/apt/sources.list.d/jenkins.list']
-    }
+file { '/etc/default/jenkins':
+    ensure  => file,
+    source  => '/vagrant/files/jenkins_conf',
+    require => Package['jenkins'],
+}
 
-    file { '/etc/default/jenkins':
-        ensure  => file,
-        source  => '/vagrant/files/jenkins_conf',
-        require => Package['jenkins'],
-    }
-
-    service {'jenkins.service':
-        ensure    => running,
-        enable    => true,
-        subscribe => File['/etc/default/jenkins'],
-    }
-
-
+service {'jenkins.service':
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/etc/default/jenkins'],
 }
 
 

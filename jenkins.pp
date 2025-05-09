@@ -9,17 +9,17 @@ file { '/etc/apt/sources.list.d/jenkins.list':
     require => File['/etc/apt/keyrings/jenkins-keyring.asc']
 }
 
-package { 'jenkins':
-    ensure  => present,
-    name    => 'jenkins',
-    require => File['/etc/apt/sources.list.d/jenkins.list']
-}
+#package { 'jenkins':
+#    ensure  => present,
+#    name    => 'jenkins',
+#    require => File['/etc/apt/sources.list.d/jenkins.list']
+#}
 
-file { '/etc/default/jenkins':
-    ensure  => file,
-    source  => '/vagrant/files/jenkins_conf',
-    require => Package['jenkins'],
-}
+#file { '/etc/default/jenkins':
+#    ensure  => file,
+#    source  => '/vagrant/files/jenkins_conf',
+#    require => Package['jenkins'],
+#}
 
 #service {'jenkins.service':
 #    ensure    => running,

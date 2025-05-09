@@ -10,21 +10,24 @@ class jenkins {
         source => '/vagrant/jenkins_apt_sources'
     }
 
-
-
-
-
-
-
-
-
-    package { "jenkins":
+    package { 'jenkins':
         ensure => present,
-        name: 'jenkins'
+        name   => 'jenkins'
+    }
+
+    file { '/etc/default/jenkins':
+        ensure => file,
+        source => '/vagrant/jenkins_conf'
+    }
+
+    service {'jenkins.service':
+        ensure    => running,
+        enable    => true,
+        subscribe => File['/etc/default/jenkins'],
     }
 
 
-
+}
 
 
 
@@ -40,5 +43,3 @@ class jenkins {
 
 # sudo apt-get install jenkins
 
-    
-}

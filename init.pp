@@ -2,22 +2,23 @@ class jenkins {
 
     file { '/etc/apt/keyrings/jenkins-keyring.asc':
         ensure => file,
-        source => '/vagrant/jenkins-keyring.asc'
+        source => '/vagrant/jenkins-keyring.asc',
     }
 
     file { '/etc/apt/sources.list.d/jenkins.list':
         ensure => file,
-        source => '/vagrant/jenkins_apt_sources'
+        source => '/vagrant/jenkins_apt_sources',
     }
 
     package { 'jenkins':
         ensure => present,
-        name   => 'jenkins'
+        name   => 'jenkins',
     }
 
     file { '/etc/default/jenkins':
         ensure => file,
-        source => '/vagrant/jenkins_conf'
+        source => '/vagrant/jenkins_conf',
+        require => Package['jenkins'],
     }
 
     service {'jenkins.service':

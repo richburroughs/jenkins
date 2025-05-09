@@ -21,11 +21,11 @@ file { '/etc/default/jenkins':
     require => Package['jenkins'],
 }
 
-service {'jenkins.service':
-    ensure    => running,
-    enable    => true,
-    subscribe => File['/etc/default/jenkins'],
-}
+#service {'jenkins.service':
+#    ensure    => running,
+#    enable    => true,
+#    subscribe => File['/etc/default/jenkins'],
+#}
 
 
 

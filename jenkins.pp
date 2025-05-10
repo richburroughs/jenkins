@@ -1,3 +1,6 @@
+# Puppet code to manage Jenkins and its dependencies.
+# Tested on Ubuntu 24.04.
+
 file { '/etc/apt/keyrings/jenkins-keyring.asc':
     ensure => file,
     source => '/vagrant/files/jenkins-keyring.asc',
@@ -8,6 +11,26 @@ file { '/etc/apt/sources.list.d/jenkins.list':
     source  => '/vagrant/files/jenkins_apt_sources',
     require => File['/etc/apt/keyrings/jenkins-keyring.asc']
 }
+
+exec {'apt update':
+    subscribe   => File['/etc/apt/sources.list.d/jenkins.list'],
+    refreshonly => true,
+    user        => 'root',
+    command     => '/usr/bin/apt update',
+}
+
+package { 'fontconfig':
+    ensure  => installed,
+    name    => 'fontconfig',
+}
+
+package { 'openjdk-17-jdk':
+    ensure  => installed,
+    name    => 'openjdk-17-jdk',
+}
+
+
+
 
 #package { 'jenkins':
 #    ensure  => present,

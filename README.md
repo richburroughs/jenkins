@@ -1,3 +1,12 @@
+Testing requires Vagrant. To install it with Homebrew:
+
+```
+brew install vagrant
+```
+
+Or you can get binaries [from Hashicorp](https://developer.hashicorp.com/vagrant/install).
+
+## Testing
 
 Run these commands to provision the VM and connect:
 

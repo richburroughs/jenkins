@@ -14,7 +14,7 @@ file { '/etc/apt/sources.list.d/jenkins.list':
 }
 
 exec {'apt update':
-    subscribe   => File['/etc/apt/sources.list.d/jenkins.list'],
+    subscribe   => [File['/etc/apt/keyrings/jenkins-keyring.asc'],File['/etc/apt/sources.list.d/jenkins.list']],
     refreshonly => true,
     user        => 'root',
     command     => '/usr/bin/apt update',
@@ -30,35 +30,23 @@ package { 'openjdk-17-jdk':
     name    => 'openjdk-17-jdk',
 }
 
-#package { 'jenkins':
-#    ensure  => present,
-#    name    => 'jenkins',
-#    require => File['/etc/apt/sources.list.d/jenkins.list']
-#}
+package { 'jenkins':
+    ensure  => present,
+    name    => 'jenkins',
+    require => [File['/etc/apt/sources.list.d/jenkins.list'],Package['fontconfig'],Package['openjdk-17-jdk']],
+}
 
-#file { '/etc/default/jenkins':
-#    ensure  => file,
- #   source  => '/vagrant/files/jenkins_conf',
-#    require => Package['jenkins'],
-#}
+# The HTTP Port that's used is the one in this file, not the one
+# in /etc/default/jenkins.
 
-#service {'jenkins.service':
-#    ensure    => running,
-#    enable    => true,
-#    subscribe => File['/etc/default/jenkins'],
-#}
+file { '/usr/lib/systemd/system/jenkins.service':
+    ensure  => file,
+    source  => '/vagrant/files/jenkins.service',
+    require => Package['jenkins'],
+}
 
-
-
-
-# sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
-#    https://pkg.jenkins.io/debian/jenkins.io-2023.key
-  
-# echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
-#    https://pkg.jenkins.io/debian binary/ | sudo tee \
-#    /etc/apt/sources.list.d/jenkins.list > /dev/null
-
-# sudo apt install openjdk-17-jdk
-
-# sudo apt-get install jenkins
-
+service {'jenkins.service':
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/usr/lib/systemd/system/jenkins.service'],
+}

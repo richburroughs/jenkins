@@ -30,23 +30,23 @@ package { 'openjdk-17-jdk':
     name    => 'openjdk-17-jdk',
 }
 
-#package { 'jenkins':
-#    ensure  => present,
-#    name    => 'jenkins',
-#    require => File['/etc/apt/sources.list.d/jenkins.list']
-#}
+package { 'jenkins':
+    ensure  => present,
+    name    => 'jenkins',
+    require => File['/etc/apt/sources.list.d/jenkins.list']
+}
 
-#file { '/etc/default/jenkins':
-#    ensure  => file,
- #   source  => '/vagrant/files/jenkins_conf',
-#    require => Package['jenkins'],
-#}
+file { '/usr/lib/systemd/system/jenkins.service':
+    ensure  => file,
+    source  => '/vagrant/files/jenkins.service',
+    require => Package['jenkins'],
+}
 
-#service {'jenkins.service':
-#    ensure    => running,
-#    enable    => true,
-#    subscribe => File['/etc/default/jenkins'],
-#}
+service {'jenkins.service':
+    ensure    => running,
+    enable    => true,
+    subscribe => File['/etc/default/jenkins'],
+}
 
 
 

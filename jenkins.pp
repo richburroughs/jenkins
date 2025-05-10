@@ -33,7 +33,7 @@ package { 'openjdk-17-jdk':
 package { 'jenkins':
     ensure  => present,
     name    => 'jenkins',
-    require => File['/etc/apt/sources.list.d/jenkins.list']
+    require => [File['/etc/apt/sources.list.d/jenkins.list'],Package['fontconfig'],Package['openjdk-17-jdk']],
 }
 
 # The HTTP Port that's used is the one in this file, not the one

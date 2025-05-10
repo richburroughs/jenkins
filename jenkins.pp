@@ -1,5 +1,6 @@
 # Puppet code to manage Jenkins and its dependencies.
 # Tested on Ubuntu 24.04.
+# Manual installation instructions: https://pkg.jenkins.io/debian/
 
 file { '/etc/apt/keyrings/jenkins-keyring.asc':
     ensure => file,
@@ -29,9 +30,6 @@ package { 'openjdk-17-jdk':
     name    => 'openjdk-17-jdk',
 }
 
-
-
-
 #package { 'jenkins':
 #    ensure  => present,
 #    name    => 'jenkins',
@@ -40,7 +38,7 @@ package { 'openjdk-17-jdk':
 
 #file { '/etc/default/jenkins':
 #    ensure  => file,
-#    source  => '/vagrant/files/jenkins_conf',
+ #   source  => '/vagrant/files/jenkins_conf',
 #    require => Package['jenkins'],
 #}
 

@@ -1,4 +1,4 @@
-Testing requires Vagrant. To install it with Homebrew:
+The included Vagrant environment can be used for testing. To install Vagrant with Homebrew:
 
 ```
 brew install vagrant
@@ -20,8 +20,8 @@ vagrant ssh
 On the VM run these commands:
 
 ```
-sudo update
-sudo install puppet-agent -y
+sudo apt update
+sudo apt install puppet-agent -y
 ```
 
 Run the Puppet manifest:
@@ -32,4 +32,8 @@ sudo puppet apply -v jenkins.pp
 
 ## Cleanup
 
+Back on the host, run:
 
+```
+vagrant destroy
+```

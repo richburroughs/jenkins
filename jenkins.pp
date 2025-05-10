@@ -14,7 +14,7 @@ file { '/etc/apt/sources.list.d/jenkins.list':
 }
 
 exec {'apt update':
-    subscribe   => File['/etc/apt/sources.list.d/jenkins.list'],
+    subscribe   => [File['/etc/apt/keyrings/jenkins-keyring.asc'],File['/etc/apt/sources.list.d/jenkins.list']],
     refreshonly => true,
     user        => 'root',
     command     => '/usr/bin/apt update',
@@ -36,6 +36,9 @@ package { 'jenkins':
     require => File['/etc/apt/sources.list.d/jenkins.list']
 }
 
+# The HTTP Port that's used is the one in this file, not the one
+# in /etc/default/jenkins.
+
 file { '/usr/lib/systemd/system/jenkins.service':
     ensure  => file,
     source  => '/vagrant/files/jenkins.service',
@@ -47,18 +50,3 @@ service {'jenkins.service':
     enable    => true,
     subscribe => File['/usr/lib/systemd/system/jenkins.service'],
 }
-
-
-
-
-# sudo wget -O /etc/apt/keyrings/jenkins-keyring.asc \
-#    https://pkg.jenkins.io/debian/jenkins.io-2023.key
-  
-# echo "deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc]" \
-#    https://pkg.jenkins.io/debian binary/ | sudo tee \
-#    /etc/apt/sources.list.d/jenkins.list > /dev/null
-
-# sudo apt install openjdk-17-jdk
-
-# sudo apt-get install jenkins
-

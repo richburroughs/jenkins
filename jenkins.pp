@@ -45,7 +45,7 @@ file { '/usr/lib/systemd/system/jenkins.service':
 service {'jenkins.service':
     ensure    => running,
     enable    => true,
-    subscribe => File['/etc/default/jenkins'],
+    subscribe => File['/usr/lib/systemd/system/jenkins.service'],
 }
 
 

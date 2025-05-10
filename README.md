@@ -30,6 +30,20 @@ cd /vagrant
 sudo puppet apply -v jenkins.pp
 ```
 
+Copy the setup wizard's admin password:
+
+```
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+
+Go to the Jenkins web ui:
+
+http://localhost:8000
+
+Paste in the admin password. You can now proceed with the setup wizard.
+
+(We obviously would skip the setup wizard if we were pulling in an existing Jenkis config and plugins.)
+
 ## Cleanup
 
 Back on the host, run:

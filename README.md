@@ -6,7 +6,7 @@ brew install vagrant
 
 Or you can get binaries [from Hashicorp](https://developer.hashicorp.com/vagrant/install).
 
-You will also need a [Vagrant provider](https://developer.hashicorp.com/vagrant/docs/providers). I used VirtualBox while developing.
+You will also need a [Vagrant provider](https://developer.hashicorp.com/vagrant/docs/providers). I used [VirtualBox](https://www.virtualbox.org) while developing.
 
 ## Testing
 

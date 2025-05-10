@@ -6,6 +6,8 @@ brew install vagrant
 
 Or you can get binaries [from Hashicorp](https://developer.hashicorp.com/vagrant/install).
 
+You will also need a [Vagrant provider](https://developer.hashicorp.com/vagrant/docs/providers). I used VirtualBox while developing.
+
 ## Testing
 
 Run these commands to provision the VM and connect:
@@ -18,8 +20,8 @@ vagrant ssh
 On the VM run these commands:
 
 ```
-sudo apt-get update
-sudo apt-get install puppet-agent
+sudo update
+sudo install puppet-agent -y
 ```
 
 Run the Puppet manifest:
@@ -27,3 +29,7 @@ Run the Puppet manifest:
 cd /vagrant
 sudo puppet apply -v jenkins.pp
 ```
+
+## Cleanup
+
+

@@ -1,1 +1,2 @@
+# This file is managed by Puppet.
 deb [signed-by=/etc/apt/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian binary/

@@ -1,15 +1,19 @@
 # Puppet code to manage Jenkins and its dependencies.
 # Tested on Ubuntu 24.04.
-# Manual installation instructions: https://pkg.jenkins.io/debian/
+
+# If you're not using the Vagrant setup to test, set $workdir to the location
+# of the jenkins.pp file.
+
+$workdir = '/vagrant'
 
 file { '/etc/apt/keyrings/jenkins-keyring.asc':
     ensure => file,
-    source => '/vagrant/files/jenkins-keyring.asc',
+    source => "$workdir/files/jenkins-keyring.asc",
 }
 
 file { '/etc/apt/sources.list.d/jenkins.list':
     ensure  => file,
-    source  => '/vagrant/files/jenkins_apt_sources',
+    source  => "$workdir/files/jenkins_apt_sources",
     require => File['/etc/apt/keyrings/jenkins-keyring.asc']
 }
 
@@ -41,7 +45,7 @@ package { 'jenkins':
 
 file { '/usr/lib/systemd/system/jenkins.service':
     ensure  => file,
-    source  => '/vagrant/files/jenkins.service',
+    source  => "$workdir/files/jenkins.service",
     require => Package['jenkins'],
 }
 

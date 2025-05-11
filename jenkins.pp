@@ -13,7 +13,7 @@ file { '/etc/apt/keyrings/jenkins-keyring.asc':
 
 file { '/etc/apt/sources.list.d/jenkins.list':
     ensure  => file,
-    source  => "$workdir/files/jenkins_apt_sources",
+    source  => "$workdir/files/jenkins.list",
     require => File['/etc/apt/keyrings/jenkins-keyring.asc']
 }
 

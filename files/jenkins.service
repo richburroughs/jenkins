@@ -1,4 +1,4 @@
-# This file is managed by Puppet.
+# This file is managed by Puppet. Do not edit it with 'systemctl edit'.
 
 [Unit]
 Description=Jenkins Continuous Integration Server
